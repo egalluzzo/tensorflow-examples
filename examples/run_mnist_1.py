@@ -44,7 +44,7 @@ accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32), name = "accur
 
 # Initialize a TensorFlow session.
 sess = tf.InteractiveSession()
-sess.run(tf.initialize_all_variables())
+sess.run(tf.global_variables_initializer())
 
 # Train the network on the training data.
 train_step = tf.train.GradientDescentOptimizer(learning_rate).minimize(cross_entropy)

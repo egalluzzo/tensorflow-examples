@@ -45,14 +45,14 @@ class MnistNeuralNetwork:
 		self.accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32), name = "accuracy")
 
 		# Initialize variables
-		self.sess.run(tf.initialize_all_variables())
+		self.sess.run(tf.global_variables_initializer())
 
 		# Training
 		train_step = tf.train.GradientDescentOptimizer(self.learning_rate).minimize(self.cross_entropy)
 		for i in range(self.iterations):
 			batch = self.mnist.train.next_batch(self.batch_size)
-			standard_feed_dict = {self.x: batch[0], self.y_: batch[1]}
-			feed_dict = dict(standard_feed_dict.items() + var_values_for_train.items())
+			feed_dict = {self.x: batch[0], self.y_: batch[1]}
+			feed_dict.update(var_values_for_train)
 			if i % 100 == 0:
 				train_accuracy = 100 * self.accuracy.eval(feed_dict = feed_dict)
 				print("Step {:05d}: batch training accuracy {:.0f}%".format(i, train_accuracy))
@@ -65,8 +65,8 @@ class MnistNeuralNetwork:
 		else:
 			var_values_for_eval = {}
 
-		standard_feed_dict = {self.x: self.mnist.test.images, self.y_: self.mnist.test.labels}
-		feed_dict = dict(standard_feed_dict.items() + var_values_for_eval.items())
+		feed_dict = {self.x: self.mnist.test.images, self.y_: self.mnist.test.labels}
+		feed_dict.update(var_values_for_eval)
 		print("Accuracy: {:.3f}%".format(100 * self.accuracy.eval(feed_dict = feed_dict)))
 
 

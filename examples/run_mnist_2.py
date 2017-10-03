@@ -1,8 +1,8 @@
 import sys, os
-sys.path.append(sys.path.append(os.path.dirname(__file__) + "/.."))
-
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
+
+sys.path.append(sys.path.append(os.path.dirname(__file__) + "/.."))
 from mnist_neural_network import mnist_neural_network
 
 
